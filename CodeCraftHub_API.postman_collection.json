@@ -1,0 +1,511 @@
+{
+  "info": {
+    "name": "CodeCraftHub API",
+    "description": "Comprehensive test collection for CodeCraftHub REST API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "API Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "health"]
+            },
+            "description": "Check if the API is running and responding"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET Endpoints",
+      "item": [
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses"]
+            },
+            "description": "Retrieve all courses in the system"
+          }
+        },
+        {
+          "name": "Get Course by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "1"]
+            },
+            "description": "Retrieve a specific course by its ID"
+          }
+        },
+        {
+          "name": "Get Course (Not Found)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "999"]
+            },
+            "description": "Test error handling - request for non-existent course"
+          }
+        },
+        {
+          "name": "Filter by Status - In Progress",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses/status/In%20Progress",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "status", "In Progress"]
+            },
+            "description": "Get all courses with 'In Progress' status"
+          }
+        },
+        {
+          "name": "Filter by Status - Not Started",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses/status/Not%20Started",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "status", "Not Started"]
+            },
+            "description": "Get all courses with 'Not Started' status"
+          }
+        },
+        {
+          "name": "Filter by Status - Completed",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses/status/Completed",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "status", "Completed"]
+            },
+            "description": "Get all courses with 'Completed' status"
+          }
+        },
+        {
+          "name": "Filter by Invalid Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses/status/InvalidStatus",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "status", "InvalidStatus"]
+            },
+            "description": "Test error handling - invalid status value"
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST Endpoints",
+      "item": [
+        {
+          "name": "Create Course - Valid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Web Development with HTML & CSS\",\n  \"description\": \"Learn to build responsive web pages with HTML5 and modern CSS\",\n  \"target_date\": \"2026-07-15\",\n  \"status\": \"Not Started\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses"]
+            },
+            "description": "Create a new course with all valid fields"
+          }
+        },
+        {
+          "name": "Create Course - Missing Name",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Learn JavaScript\",\n  \"target_date\": \"2026-07-15\",\n  \"status\": \"Not Started\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses"]
+            },
+            "description": "Test error handling - missing required 'name' field"
+          }
+        },
+        {
+          "name": "Create Course - Missing Multiple Fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Incomplete Course\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses"]
+            },
+            "description": "Test error handling - missing multiple required fields"
+          }
+        },
+        {
+          "name": "Create Course - Invalid Status",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Docker Fundamentals\",\n  \"description\": \"Learn containerization with Docker\",\n  \"target_date\": \"2026-09-30\",\n  \"status\": \"InProgress\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses"]
+            },
+            "description": "Test error handling - invalid status value (missing space)"
+          }
+        },
+        {
+          "name": "Create Course - Invalid Date Format",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kubernetes Advanced\",\n  \"description\": \"Master Kubernetes orchestration\",\n  \"target_date\": \"31/12/2026\",\n  \"status\": \"Not Started\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses"]
+            },
+            "description": "Test error handling - invalid date format"
+          }
+        },
+        {
+          "name": "Create Course - In Progress",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"TypeScript Essentials\",\n  \"description\": \"Learn TypeScript for scalable JavaScript applications\",\n  \"target_date\": \"2026-06-30\",\n  \"status\": \"In Progress\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses"]
+            },
+            "description": "Create a course with 'In Progress' status"
+          }
+        },
+        {
+          "name": "Create Course - Completed",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Git & GitHub\",\n  \"description\": \"Master version control and collaboration with Git and GitHub\",\n  \"target_date\": \"2026-05-31\",\n  \"status\": \"Completed\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses"]
+            },
+            "description": "Create a course with 'Completed' status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "PUT Endpoints",
+      "item": [
+        {
+          "name": "Update Course - Change Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"In Progress\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "1"]
+            },
+            "description": "Update only the status of a course"
+          }
+        },
+        {
+          "name": "Update Course - Change Multiple Fields",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"In Progress\",\n  \"target_date\": \"2026-06-15\",\n  \"description\": \"Master building RESTful APIs with Flask framework and testing\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "2"]
+            },
+            "description": "Update multiple fields of a course"
+          }
+        },
+        {
+          "name": "Update Course - Course Not Found",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"In Progress\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "999"]
+            },
+            "description": "Test error handling - update non-existent course"
+          }
+        },
+        {
+          "name": "Update Course - Invalid Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"OnHold\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "1"]
+            },
+            "description": "Test error handling - invalid status value"
+          }
+        },
+        {
+          "name": "Update Course - Invalid Date",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"target_date\": \"2026/12/31\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "1"]
+            },
+            "description": "Test error handling - invalid date format"
+          }
+        },
+        {
+          "name": "Update Course - Change Name",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Python Programming Masterclass\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/courses/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "1"]
+            },
+            "description": "Update only the course name"
+          }
+        }
+      ]
+    },
+    {
+      "name": "DELETE Endpoints",
+      "item": [
+        {
+          "name": "Delete Course - Success",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses/3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "3"]
+            },
+            "description": "Delete an existing course"
+          }
+        },
+        {
+          "name": "Delete Course - Not Found",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses/999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "999"]
+            },
+            "description": "Test error handling - delete non-existent course"
+          }
+        },
+        {
+          "name": "Verify Deletion",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/courses/3",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5000",
+              "path": ["api", "courses", "3"]
+            },
+            "description": "Verify the course was successfully deleted"
+          }
+        }
+      ]
+    }
+  ]
+}
