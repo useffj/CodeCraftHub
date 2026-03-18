@@ -10,13 +10,13 @@ This application provides a complete REST API for managing courses with:
 - Auto-generated IDs and timestamps
 """
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import json
 import os
 from datetime import datetime
 
 # Initialize Flask application
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates', static_folder='static')
 
 # Path to the JSON data file
 DATA_FILE = 'data/courses.json'
@@ -406,6 +406,29 @@ def health_check():
 
 
 # ========================
+# FRONTEND ROUTES
+# ========================
+
+@app.route('/')
+def dashboard():
+    """
+    GET /
+    
+    Serve the dashboard HTML page.
+    
+    Returns:
+        HTML dashboard template
+    """
+    return render_template('dashboard.html')
+
+
+@app.route('/index')
+def index():
+    """Alias for dashboard route"""
+    return render_template('dashboard.html')
+
+
+# ========================
 # ERROR HANDLING
 # ========================
 
@@ -473,4 +496,4 @@ if __name__ == '__main__':
     
     # Run the Flask app in debug mode (good for development)
     # In production, use a production WSGI server like Gunicorn
-    app.run(debug=True, host='localhost', port=5001)
+    app.run(debug=False, host='localhost', port=5001, use_reloader=False)
